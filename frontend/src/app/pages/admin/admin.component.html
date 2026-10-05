@@ -9,7 +9,18 @@
         </div>
       </div>
 
+      <nav class="topnav" aria-label="Navegación administrativa">
+        <a href="#resumen">Resumen</a>
+        <a href="#reservas">Reservas</a>
+        <a href="#valores">Valores</a>
+        <a href="#turnos">Turnos</a>
+      </nav>
+
       <div class="user-area">
+        <div class="system-pill">
+          <span class="online-dot"></span>
+          Online
+        </div>
         <div class="user-copy">
           <strong>{{ usuario()?.nombre }} {{ usuario()?.apellido }}</strong>
           <span>Administrador</span>
@@ -20,9 +31,28 @@
       </div>
     </header>
 
-    <section class="hero-copy">
+    <section class="hero-copy" id="resumen">
+      <div class="hero-kicker">Centro de gestión</div>
       <h1>Panel administrativo</h1>
       <p>Gestioná reservas, agenda y valores de consulta.</p>
+    </section>
+
+    <section class="summary-grid" aria-label="Resumen administrativo">
+      <article class="summary-card">
+        <span class="summary-label">Turnos visibles</span>
+        <strong>{{ turnos().length }}</strong>
+        <small>Registros actuales</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Pacientes</span>
+        <strong>{{ pacientes().length }}</strong>
+        <small>Disponibles para reservar</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Médicos</span>
+        <strong>{{ medicos().length }}</strong>
+        <small>Profesionales activos</small>
+      </article>
     </section>
 
     @if (error()) {
@@ -34,7 +64,8 @@
     }
 
     <div class="grid two top-grid">
-      <section class="card">
+      <section class="card section-anchor" id="reservas">
+        <div class="section-tag">Gestión de agenda</div>
         <div class="card-header">
           <div>
             <h2>Nueva reserva</h2>
@@ -109,7 +140,8 @@
         </form>
       </section>
 
-      <section class="card">
+      <section class="card section-anchor" id="valores">
+        <div class="section-tag">Configuración</div>
         <div class="card-header">
           <div>
             <h2>Valores de consulta</h2>
@@ -152,7 +184,8 @@
       </section>
     </div>
 
-    <section class="card appointments-card">
+    <section class="card appointments-card section-anchor" id="turnos">
+      <div class="section-tag">Control general</div>
       <div class="appointments-header">
         <div>
           <h2>Turnos registrados</h2>
@@ -232,5 +265,10 @@
         <div class="empty">No hay turnos para mostrar.</div>
       }
     </section>
+
+    <footer class="app-footer">
+      <span>Clínica OOWS</span>
+      <span>Administración · Gestión integral de turnos</span>
+    </footer>
   </div>
 </main>
