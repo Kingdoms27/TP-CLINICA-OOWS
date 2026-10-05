@@ -1,0 +1,88 @@
+.feedback {
+  margin-bottom: 18px;
+}
+
+.agenda-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.date-control {
+  display: flex;
+  gap: 9px;
+}
+
+.date-control input {
+  border: 1px solid #d6e6e4;
+  border-radius: 14px;
+  outline: none;
+  background: white;
+  color: #17393a;
+  padding: 10px 12px;
+}
+
+.agenda {
+  display: grid;
+  gap: 10px;
+}
+
+.appointment {
+  display: grid;
+  grid-template-columns: 82px 1fr auto auto;
+  align-items: center;
+  gap: 15px;
+  padding: 16px;
+  border: 1px solid #e3eeee;
+  border-radius: 18px;
+  background: rgba(250, 253, 253, 0.76);
+}
+
+.hour {
+  font-family: 'Manrope', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.patient {
+  display: grid;
+  gap: 3px;
+}
+
+.patient span {
+  color: #7a9292;
+  font-size: 12px;
+}
+
+.appointment-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.attended {
+  background: #e8f4eb;
+  color: #3e7748;
+}
+
+.absent {
+  background: #fff3df;
+  color: #91651f;
+}
+
+@media (max-width: 800px) {
+  .agenda-header,
+  .date-control {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .appointment {
+    grid-template-columns: 72px 1fr;
+  }
+
+  .appointment-actions {
+    grid-column: 1 / -1;
+  }
+}
