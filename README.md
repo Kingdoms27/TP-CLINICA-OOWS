@@ -67,3 +67,15 @@ docker compose up -d
 ## Rama de desarrollo
 
 `Kevin`
+
+## Estado del desarrollo
+
+- Backend NestJS: implementado
+- Autenticación JWT: implementada
+- Reglas por rol: implementadas
+- Turnos y disponibilidad: implementados
+- Frontend Angular: implementado
+- Panel paciente: implementado
+- Panel médico: implementado
+- Panel administrador: implementado
+- Documentación OOWS: incluida en `docs/`
