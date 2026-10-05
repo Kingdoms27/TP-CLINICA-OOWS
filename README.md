@@ -6,17 +6,54 @@ Sistema web para gestión de turnos de una clínica médica.
 
 - Angular
 - NestJS
-- PostgreSQL
 - TypeORM
+- PostgreSQL
+- Base embebida local para desarrollo
 - JWT
 
-## Estructura
+## Inicio rápido en Windows
+
+Después de clonar o actualizar la rama `Kevin`:
+
+```powershell
+git pull origin Kevin
+cd backend
+npm install
+copy .env.example .env
+npm run start:dev
+```
+
+Para desarrollo local no hace falta Docker, pgAdmin ni configurar una contraseña de PostgreSQL. El backend usa una base embebida persistente en `backend/clinica-oows.sqlite`.
+
+En otra terminal:
+
+```powershell
+cd frontend
+npm install
+npm start
+```
+
+Abrir:
 
 ```text
-TP-CLINICA-OOWS
-├── backend
-├── frontend
-└── docker-compose.yml
+http://localhost:4200
+```
+
+## PostgreSQL
+
+PostgreSQL sigue siendo compatible y es el motor utilizado en las pruebas de integración del repositorio.
+
+Para usar PostgreSQL local:
+
+```powershell
+cd backend
+copy .env.postgres.example .env
+```
+
+Luego completar `DB_PASSWORD` con la contraseña real del usuario PostgreSQL y ejecutar:
+
+```powershell
+npm run start:dev
 ```
 
 ## Reglas principales
@@ -31,59 +68,6 @@ TP-CLINICA-OOWS
 - El administrador puede cancelar hasta el inicio de la consulta.
 - El médico puede marcar un turno como ATENDIDO o AUSENTE.
 
-## Backend
-
-### Windows con PostgreSQL local
-
-```powershell
-cd backend
-npm install
-powershell -ExecutionPolicy Bypass -File .\setup-local.ps1
-npm run start:dev
-```
-
-El script solicita host, puerto, usuario, base y contraseña de PostgreSQL, y genera `backend/.env`.
-
-### Configuración manual
-
-También se puede copiar `.env.example` a `.env` y reemplazar:
-
-```text
-DB_PASSWORD=TU_PASSWORD_POSTGRES
-```
-
-por la contraseña real del usuario PostgreSQL configurado en la computadora.
-
-## Frontend
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-La aplicación se abre en `http://localhost:4200`.
-
-## PostgreSQL
-
-El proyecto funciona con PostgreSQL local o Docker.
-
-### PostgreSQL local
-
-Crear una base llamada:
-
-```text
-clinica_oows
-```
-
-con el usuario PostgreSQL configurado en la computadora.
-
-### Docker
-
-```bash
-docker compose up -d
-```
-
 ## Usuarios iniciales
 
 | Rol | Usuario | Contraseña |
@@ -92,18 +76,12 @@ docker compose up -d
 | Médico | medico | Medico123! |
 | Paciente | paciente | Paciente123! |
 
+## Documentación
+
+- `docs/TRABAJO-INTEGRADOR-OOWS.md`
+- `docs/DIAGRAMAS-OOWS.md`
+- `docs/MAPEO-TRABAJO-PRACTICO.md`
+
 ## Rama de desarrollo
 
 `Kevin`
-
-## Estado del desarrollo
-
-- Backend NestJS: implementado
-- Autenticación JWT: implementada
-- Reglas por rol: implementadas
-- Turnos y disponibilidad: implementados
-- Frontend Angular: implementado
-- Panel paciente: implementado
-- Panel médico: implementado
-- Panel administrador: implementado
-- Documentación OOWS: incluida en `docs/`
