@@ -9,7 +9,16 @@
         </div>
       </div>
 
+      <nav class="topnav" aria-label="Navegación médica">
+        <a href="#resumen">Resumen</a>
+        <a href="#agenda">Agenda</a>
+      </nav>
+
       <div class="user-area">
+        <div class="system-pill">
+          <span class="online-dot"></span>
+          Online
+        </div>
         <div class="user-copy">
           <strong>{{ usuario()?.nombre }} {{ usuario()?.apellido }}</strong>
           <span>Médico clínico</span>
@@ -20,9 +29,28 @@
       </div>
     </header>
 
-    <section class="hero-copy">
+    <section class="hero-copy" id="resumen">
+      <div class="hero-kicker">Agenda profesional</div>
       <h1>Agenda médica</h1>
       <p>Consultá los turnos del día y registrá la asistencia.</p>
+    </section>
+
+    <section class="summary-grid" aria-label="Resumen de agenda">
+      <article class="summary-card">
+        <span class="summary-label">Turnos de la fecha</span>
+        <strong>{{ turnos().length }}</strong>
+        <small>Agenda seleccionada</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Horario clínico</span>
+        <strong>08–16</strong>
+        <small>Atención programada</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Duración por turno</span>
+        <strong>1 h</strong>
+        <small>Bloques de consulta</small>
+      </article>
     </section>
 
     @if (error()) {
@@ -33,7 +61,8 @@
       <div class="alert success feedback">{{ mensaje() }}</div>
     }
 
-    <section class="card">
+    <section class="card section-anchor" id="agenda">
+      <div class="section-tag">Agenda diaria</div>
       <div class="agenda-header">
         <div>
           <h2>Turnos reservados</h2>
@@ -95,5 +124,10 @@
         <div class="empty">No hay turnos para la fecha seleccionada.</div>
       }
     </section>
+
+    <footer class="app-footer">
+      <span>Clínica OOWS</span>
+      <span>Panel médico · Seguimiento de asistencia</span>
+    </footer>
   </div>
 </main>
