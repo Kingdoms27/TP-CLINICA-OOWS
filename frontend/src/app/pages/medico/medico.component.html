@@ -1,0 +1,99 @@
+<main class="page">
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div class="brand-copy">
+          <strong>Clínica OOWS</strong>
+          <span>Panel médico</span>
+        </div>
+      </div>
+
+      <div class="user-area">
+        <div class="user-copy">
+          <strong>{{ usuario()?.nombre }} {{ usuario()?.apellido }}</strong>
+          <span>Médico clínico</span>
+        </div>
+        <button class="btn btn-soft" type="button" (click)="salir()">
+          Salir
+        </button>
+      </div>
+    </header>
+
+    <section class="hero-copy">
+      <h1>Agenda médica</h1>
+      <p>Consultá los turnos del día y registrá la asistencia.</p>
+    </section>
+
+    @if (error()) {
+      <div class="alert error feedback">{{ error() }}</div>
+    }
+
+    @if (mensaje()) {
+      <div class="alert success feedback">{{ mensaje() }}</div>
+    }
+
+    <section class="card">
+      <div class="agenda-header">
+        <div>
+          <h2>Turnos reservados</h2>
+          <span class="muted">{{ turnos().length }} turnos</span>
+        </div>
+
+        <div class="date-control">
+          <input
+            type="date"
+            [(ngModel)]="fecha"
+            (change)="cargar()"
+          >
+          <button class="btn btn-primary" type="button" (click)="cargar()">
+            Buscar
+          </button>
+        </div>
+      </div>
+
+      @if (turnos().length) {
+        <div class="agenda">
+          @for (turno of turnos(); track turno.id) {
+            <article class="appointment">
+              <div class="hour">{{ turno.hora.slice(0, 5) }}</div>
+
+              <div class="patient">
+                <strong>
+                  {{ turno.paciente.usuario.nombre }}
+                  {{ turno.paciente.usuario.apellido }}
+                </strong>
+                <span>Paciente</span>
+              </div>
+
+              <span class="status" [class]="turno.estado">
+                {{ turno.estado }}
+              </span>
+
+              <div class="appointment-actions">
+                <button
+                  class="btn attended"
+                  type="button"
+                  [disabled]="turno.estado !== 'RESERVADO'"
+                  (click)="cambiarEstado(turno, 'ATENDIDO')"
+                >
+                  Atendido
+                </button>
+                <button
+                  class="btn absent"
+                  type="button"
+                  [disabled]="turno.estado !== 'RESERVADO'"
+                  (click)="cambiarEstado(turno, 'AUSENTE')"
+                >
+                  Ausente
+                </button>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="empty">No hay turnos para la fecha seleccionada.</div>
+      }
+    </section>
+  </div>
+</main>
