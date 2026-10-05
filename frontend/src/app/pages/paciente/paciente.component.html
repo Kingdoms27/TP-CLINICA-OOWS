@@ -9,7 +9,17 @@
         </div>
       </div>
 
+      <nav class="topnav" aria-label="Navegación del paciente">
+        <a href="#resumen">Resumen</a>
+        <a href="#reservar">Reservar</a>
+        <a href="#mis-turnos">Mis turnos</a>
+      </nav>
+
       <div class="user-area">
+        <div class="system-pill">
+          <span class="online-dot"></span>
+          Online
+        </div>
         <div class="user-copy">
           <strong>{{ usuario()?.nombre }} {{ usuario()?.apellido }}</strong>
           <span>Paciente</span>
@@ -20,9 +30,28 @@
       </div>
     </header>
 
-    <section class="hero-copy">
+    <section class="hero-copy" id="resumen">
+      <div class="hero-kicker">Portal personal</div>
       <h1>Hola, {{ usuario()?.nombre }}</h1>
       <p>Reservá y administrá tus próximos turnos desde un solo lugar.</p>
+    </section>
+
+    <section class="summary-grid" aria-label="Resumen">
+      <article class="summary-card">
+        <span class="summary-label">Turnos registrados</span>
+        <strong>{{ turnos().length }}</strong>
+        <small>Tu historial actual</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Médicos disponibles</span>
+        <strong>{{ medicos().length }}</strong>
+        <small>Profesionales clínicos</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Horario de atención</span>
+        <strong>08–16</strong>
+        <small>Turnos de una hora</small>
+      </article>
     </section>
 
     @if (error()) {
@@ -34,7 +63,8 @@
     }
 
     <div class="grid two">
-      <section class="card reservation-card">
+      <section class="card reservation-card section-anchor" id="reservar">
+        <div class="section-tag">Nueva reserva</div>
         <div class="card-header">
           <div>
             <h2>Reservar turno</h2>
@@ -97,7 +127,8 @@
         </form>
       </section>
 
-      <section class="card">
+      <section class="card section-anchor" id="mis-turnos">
+        <div class="section-tag">Seguimiento</div>
         <div class="card-header">
           <div>
             <h2>Mis turnos</h2>
@@ -147,5 +178,10 @@
         }
       </section>
     </div>
+
+    <footer class="app-footer">
+      <span>Clínica OOWS</span>
+      <span>Portal del paciente · Gestión segura de turnos</span>
+    </footer>
   </div>
 </main>
