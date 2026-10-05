@@ -208,7 +208,7 @@
                     {{ +turno.valorConsultaReserva | currency:'ARS':'symbol':'1.0-0' }}
                   </td>
                   <td>
-                    <span class="status" [class]="turno.estado">
+                    <span [class]="'status ' + turno.estado">
                       {{ turno.estado }}
                     </span>
                   </td>
