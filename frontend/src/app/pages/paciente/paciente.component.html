@@ -1,0 +1,151 @@
+<main class="page">
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div class="brand-copy">
+          <strong>Clínica OOWS</strong>
+          <span>Portal del paciente</span>
+        </div>
+      </div>
+
+      <div class="user-area">
+        <div class="user-copy">
+          <strong>{{ usuario()?.nombre }} {{ usuario()?.apellido }}</strong>
+          <span>Paciente</span>
+        </div>
+        <button class="btn btn-soft" type="button" (click)="salir()">
+          Salir
+        </button>
+      </div>
+    </header>
+
+    <section class="hero-copy">
+      <h1>Hola, {{ usuario()?.nombre }}</h1>
+      <p>Reservá y administrá tus próximos turnos desde un solo lugar.</p>
+    </section>
+
+    @if (error()) {
+      <div class="alert error feedback">{{ error() }}</div>
+    }
+
+    @if (mensaje()) {
+      <div class="alert success feedback">{{ mensaje() }}</div>
+    }
+
+    <div class="grid two">
+      <section class="card reservation-card">
+        <div class="card-header">
+          <div>
+            <h2>Reservar turno</h2>
+            <span class="muted">Hasta 30 días de anticipación</span>
+          </div>
+        </div>
+
+        <form
+          class="form-grid"
+          [formGroup]="formulario"
+          (ngSubmit)="reservar()"
+        >
+          <div class="field span-two">
+            <label>Médico clínico</label>
+            <select formControlName="medicoId">
+              <option [ngValue]="0">Seleccionar médico</option>
+              @for (medico of medicos(); track medico.id) {
+                <option [ngValue]="medico.id">
+                  Dra./Dr. {{ medico.usuario.nombre }}
+                  {{ medico.usuario.apellido }}
+                  · {{ +medico.valorConsulta | currency:'ARS':'symbol':'1.0-0' }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Fecha</label>
+            <input
+              type="date"
+              formControlName="fecha"
+              [min]="fechaMinima"
+              [max]="fechaMaxima"
+            >
+          </div>
+
+          <div class="field">
+            <label>Horario</label>
+            <select formControlName="hora">
+              <option value="">Seleccionar horario</option>
+              @for (item of horarios(); track item.hora) {
+                <option
+                  [value]="item.hora"
+                  [disabled]="!item.disponible"
+                >
+                  {{ item.hora }}
+                  {{ item.disponible ? '' : ' · ocupado' }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <button
+            class="btn btn-primary span-two"
+            type="submit"
+            [disabled]="guardando()"
+          >
+            {{ guardando() ? 'Reservando...' : 'Confirmar reserva' }}
+          </button>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <h2>Mis turnos</h2>
+            <span class="muted">{{ turnos().length }} registros</span>
+          </div>
+        </div>
+
+        @if (turnos().length) {
+          <div class="turnos">
+            @for (turno of turnos(); track turno.id) {
+              <article class="turno">
+                <div class="turno-time">
+                  <strong>{{ turno.hora.slice(0, 5) }}</strong>
+                  <span>{{ turno.fecha }}</span>
+                </div>
+
+                <div class="turno-info">
+                  <strong>
+                    {{ turno.medico.usuario.nombre }}
+                    {{ turno.medico.usuario.apellido }}
+                  </strong>
+                  <span>
+                    {{ +turno.valorConsultaReserva | currency:'ARS':'symbol':'1.0-0' }}
+                  </span>
+                </div>
+
+                <div class="turno-actions">
+                  <span class="status" [class]="turno.estado">
+                    {{ turno.estado }}
+                  </span>
+
+                  @if (turno.estado === 'RESERVADO') {
+                    <button
+                      class="btn btn-danger"
+                      type="button"
+                      (click)="cancelar(turno)"
+                    >
+                      Cancelar
+                    </button>
+                  }
+                </div>
+              </article>
+            }
+          </div>
+        } @else {
+          <div class="empty">Todavía no tenés turnos registrados.</div>
+        }
+      </section>
+    </div>
+  </div>
+</main>
