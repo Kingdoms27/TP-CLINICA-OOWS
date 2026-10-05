@@ -21,6 +21,8 @@ import { UsuariosModule } from './usuarios/usuarios.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
+      retryAttempts: 2,
+      retryDelay: 1000,
       autoLoadEntities: true,
       synchronize: process.env.DB_SYNC !== 'false',
     }),
