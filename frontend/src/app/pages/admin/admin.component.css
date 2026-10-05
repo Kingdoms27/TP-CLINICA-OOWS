@@ -12,14 +12,60 @@
 }
 
 .price-row {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
+  overflow: hidden;
   padding: 14px;
   border: 1px solid #e2eeee;
   border-radius: 17px;
-  background: rgba(250, 253, 253, 0.76);
+  background:
+    linear-gradient(145deg, rgba(252, 254, 254, 0.92), rgba(246, 251, 250, 0.72));
+  animation: rowEnter 500ms cubic-bezier(.2, .8, .2, 1) both;
+  transition:
+    transform 220ms cubic-bezier(.2, .8, .2, 1),
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.price-row:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+.price-row:nth-child(3) {
+  animation-delay: 140ms;
+}
+
+.price-row:nth-child(n + 4) {
+  animation-delay: 190ms;
+}
+
+.price-row::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  content: '';
+  background: linear-gradient(#4e9e97, rgba(78, 158, 151, 0.16));
+  opacity: 0;
+  transform: scaleY(0.55);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.price-row:hover {
+  transform: translateY(-2px);
+  border-color: rgba(111, 178, 171, 0.38);
+  box-shadow: 0 14px 34px rgba(31, 88, 85, 0.065);
+}
+
+.price-row:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
 }
 
 .price-row > div:first-child {
@@ -43,8 +89,19 @@
   border: 1px solid #d6e6e4;
   border-radius: 13px;
   outline: none;
-  background: white;
+  background: rgba(255, 255, 255, 0.9);
   padding: 10px 11px;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.price-control input:focus,
+.filters input:focus {
+  border-color: #67aaa4;
+  box-shadow: 0 0 0 4px rgba(103, 170, 164, 0.12);
+  transform: translateY(-1px);
 }
 
 .appointments-card {
@@ -62,6 +119,60 @@
 .filters {
   display: flex;
   gap: 8px;
+}
+
+.appointments-card tbody tr {
+  animation: tableRowEnter 460ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.appointments-card tbody tr:nth-child(2) {
+  animation-delay: 45ms;
+}
+
+.appointments-card tbody tr:nth-child(3) {
+  animation-delay: 90ms;
+}
+
+.appointments-card tbody tr:nth-child(4) {
+  animation-delay: 135ms;
+}
+
+.appointments-card tbody tr:nth-child(n + 5) {
+  animation-delay: 175ms;
+}
+
+.appointments-card tbody tr:hover td:first-child {
+  color: #28766f;
+}
+
+.appointments-card td {
+  transition:
+    color 180ms ease,
+    background 180ms ease;
+}
+
+@keyframes rowEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tableRowEnter {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @media (max-width: 760px) {
