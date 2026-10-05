@@ -1,0 +1,107 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - Kevin
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: clinica-oows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: backend/package.json
+      - run: npm install
+      - run: npm run build
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/package.json
+      - run: npm install
+      - run: npm run build
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: clinica_oows
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d clinica_oows"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PORT: 3000
+      DB_TYPE: postgres
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: clinica_oows
+      DB_SYNC: true
+      JWT_SECRET: clinica_oows_ci
+      JWT_EXPIRES_IN: 8h
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: backend/package.json
+      - run: npm install
+        working-directory: backend
+      - run: npm run build
+        working-directory: backend
+      - run: npm run start:prod > /tmp/clinica-api.log 2>&1 &
+        working-directory: backend
+      - run: node scripts/smoke-api.mjs
+
+  local:
+    runs-on: ubuntu-latest
+    env:
+      PORT: 3000
+      JWT_SECRET: clinica_oows_local_ci
+      JWT_EXPIRES_IN: 8h
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: backend/package.json
+      - run: npm install
+        working-directory: backend
+      - run: npm run build
+        working-directory: backend
+      - run: npm run start:prod > /tmp/clinica-api-local.log 2>&1 &
+        working-directory: backend
+      - run: node scripts/smoke-api.mjs

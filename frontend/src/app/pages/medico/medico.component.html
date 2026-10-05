@@ -1,0 +1,133 @@
+<main class="page">
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <div class="brand-copy">
+          <strong>Clínica OOWS</strong>
+          <span>Panel médico</span>
+        </div>
+      </div>
+
+      <nav class="topnav" aria-label="Navegación médica">
+        <a href="#resumen">Resumen</a>
+        <a href="#agenda">Agenda</a>
+      </nav>
+
+      <div class="user-area">
+        <div class="system-pill">
+          <span class="online-dot"></span>
+          Online
+        </div>
+        <div class="user-copy">
+          <strong>{{ usuario()?.nombre }} {{ usuario()?.apellido }}</strong>
+          <span>Médico clínico</span>
+        </div>
+        <button class="btn btn-soft" type="button" (click)="salir()">
+          Salir
+        </button>
+      </div>
+    </header>
+
+    <section class="hero-copy" id="resumen">
+      <div class="hero-kicker">Agenda profesional</div>
+      <h1>Agenda médica</h1>
+      <p>Consultá los turnos del día y registrá la asistencia.</p>
+    </section>
+
+    <section class="summary-grid" aria-label="Resumen de agenda">
+      <article class="summary-card">
+        <span class="summary-label">Turnos de la fecha</span>
+        <strong>{{ turnos().length }}</strong>
+        <small>Agenda seleccionada</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Horario clínico</span>
+        <strong>08–16</strong>
+        <small>Atención programada</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Duración por turno</span>
+        <strong>1 h</strong>
+        <small>Bloques de consulta</small>
+      </article>
+    </section>
+
+    @if (error()) {
+      <div class="alert error feedback">{{ error() }}</div>
+    }
+
+    @if (mensaje()) {
+      <div class="alert success feedback">{{ mensaje() }}</div>
+    }
+
+    <section class="card section-anchor" id="agenda">
+      <div class="section-tag">Agenda diaria</div>
+      <div class="agenda-header">
+        <div>
+          <h2>Turnos reservados</h2>
+          <span class="muted">{{ turnos().length }} turnos</span>
+        </div>
+
+        <div class="date-control">
+          <input
+            type="date"
+            [(ngModel)]="fecha"
+            (change)="cargar()"
+          >
+          <button class="btn btn-primary" type="button" (click)="cargar()">
+            Buscar
+          </button>
+        </div>
+      </div>
+
+      @if (turnos().length) {
+        <div class="agenda">
+          @for (turno of turnos(); track turno.id) {
+            <article class="appointment">
+              <div class="hour">{{ turno.hora.slice(0, 5) }}</div>
+
+              <div class="patient">
+                <strong>
+                  {{ turno.paciente.usuario.nombre }}
+                  {{ turno.paciente.usuario.apellido }}
+                </strong>
+                <span>Paciente</span>
+              </div>
+
+              <span [class]="'status ' + turno.estado">
+                {{ turno.estado }}
+              </span>
+
+              <div class="appointment-actions">
+                <button
+                  class="btn attended"
+                  type="button"
+                  [disabled]="turno.estado !== 'RESERVADO'"
+                  (click)="cambiarEstado(turno, 'ATENDIDO')"
+                >
+                  Atendido
+                </button>
+                <button
+                  class="btn absent"
+                  type="button"
+                  [disabled]="turno.estado !== 'RESERVADO'"
+                  (click)="cambiarEstado(turno, 'AUSENTE')"
+                >
+                  Ausente
+                </button>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="empty">No hay turnos para la fecha seleccionada.</div>
+      }
+    </section>
+
+    <footer class="app-footer">
+      <span>Clínica OOWS</span>
+      <span>Panel médico · Seguimiento de asistencia</span>
+    </footer>
+  </div>
+</main>
