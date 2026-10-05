@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: clinica_oows_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: clinica_oows
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - clinica_oows_data:/var/lib/postgresql/data
+
+volumes:
+  clinica_oows_data:
