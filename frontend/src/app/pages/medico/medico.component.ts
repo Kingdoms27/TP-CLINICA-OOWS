@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
@@ -13,17 +13,15 @@ import { EstadoTurno, Turno } from '../../core/models';
   styleUrl: './medico.component.css',
 })
 export class MedicoComponent implements OnInit {
+  private readonly api = inject(ClinicaApiService);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
   readonly usuario = this.auth.usuario;
   readonly turnos = signal<Turno[]>([]);
   readonly error = signal('');
   readonly mensaje = signal('');
   fecha = this.fechaISO(new Date());
-
-  constructor(
-    private readonly api: ClinicaApiService,
-    private readonly auth: AuthService,
-    private readonly router: Router,
-  ) {}
 
   ngOnInit() {
     this.cargar();
