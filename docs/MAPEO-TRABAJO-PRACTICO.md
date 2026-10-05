@@ -46,7 +46,7 @@
 | Autenticación JWT | Implementada |
 | Autorización por rol | Implementada |
 | Reglas de turnos | Implementadas |
-| Angular | En corrección de build |
+| Angular | Compila y funciona |
 | Login | Implementado |
 | Panel Paciente | Implementado |
 | Panel Médico | Implementado |
@@ -54,15 +54,24 @@
 | Documentación | Completa |
 | Diagramas OOWS | Completos |
 
-## Próximas validaciones
+## Validaciones realizadas
 
-1. Confirmar build del frontend.
-2. Levantar PostgreSQL.
-3. Probar login con los tres roles.
-4. Probar reserva paciente.
-5. Probar cancelación paciente.
-6. Probar agenda médico.
-7. Probar ATENDIDO y AUSENTE.
-8. Probar reserva administrador.
-9. Probar cancelación administrador.
-10. Probar modificación de valor y conservación del precio histórico.
+1. Build del backend confirmado.
+2. Build del frontend confirmado.
+3. Modo local sin Docker ni PostgreSQL probado.
+4. Integración con PostgreSQL probada.
+5. Login de los tres roles probado.
+6. Reserva de paciente probada.
+7. Cancelación de paciente probada.
+8. Agenda médica probada.
+9. Cambio de estado ATENDIDO probado.
+10. Reserva y cancelación de administrador probadas.
+11. Modificación de valor de consulta probada.
+12. Conservación del precio histórico validada.
+13. Límite de 30 días validado.
+14. Horarios pasados bloqueados.
+15. Interfaz responsive y animaciones finales implementadas.
+
+## Estado de entrega
+
+El proyecto se encuentra funcional y completo para la entrega académica en la rama `Kevin`.
