@@ -40,6 +40,16 @@ cp .env.example .env
 npm run start:dev
 ```
 
+## Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+La aplicación se abre en `http://localhost:4200`.
+
 ## PostgreSQL
 
 ```bash
