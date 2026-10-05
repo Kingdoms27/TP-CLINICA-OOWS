@@ -74,4 +74,4 @@
 
 ## Estado de entrega
 
-El proyecto se encuentra funcional y completo para la entrega académica en la rama `Kevin`.
+El proyecto se encuentra funcional y completo para la entrega académica en la rama `main`.
