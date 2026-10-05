@@ -1,0 +1,65 @@
+.feedback {
+  margin-bottom: 18px;
+}
+
+.reservation-card {
+  align-self: start;
+}
+
+.turnos {
+  display: grid;
+  gap: 12px;
+}
+
+.turno {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 15px;
+  border: 1px solid #e2eeee;
+  border-radius: 18px;
+  background: rgba(250, 253, 253, 0.75);
+}
+
+.turno-time {
+  display: grid;
+  gap: 3px;
+}
+
+.turno-time strong {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+}
+
+.turno-time span,
+.turno-info span {
+  color: #789091;
+  font-size: 12px;
+}
+
+.turno-info {
+  display: grid;
+  gap: 4px;
+}
+
+.turno-info strong {
+  font-size: 14px;
+}
+
+.turno-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 650px) {
+  .turno {
+    grid-template-columns: 1fr;
+  }
+
+  .turno-actions {
+    justify-content: flex-start;
+  }
+}
