@@ -83,6 +83,14 @@ export class TurnosService {
     return normalizada;
   }
 
+  private inicioTurno(fecha: string, hora: string) {
+    return new Date(`${fecha}T${hora.slice(0, 5)}:00`);
+  }
+
+  private horarioYaPaso(fecha: string, hora: string) {
+    return this.inicioTurno(fecha, hora) <= new Date();
+  }
+
   async disponibilidad(medicoId: number, fecha: string) {
     this.validarFechaReserva(fecha);
     await this.medicosService.buscarPorId(medicoId);
@@ -103,7 +111,9 @@ export class TurnosService {
 
     return this.horarios.map((hora) => ({
       hora,
-      disponible: !horasOcupadas.has(hora),
+      disponible:
+        !horasOcupadas.has(hora) &&
+        !this.horarioYaPaso(fecha, hora),
     }));
   }
 
@@ -111,6 +121,13 @@ export class TurnosService {
     this.validarFechaReserva(dto.fecha);
 
     const hora = this.validarHorario(dto.hora);
+
+    if (this.horarioYaPaso(dto.fecha, hora)) {
+      throw new BadRequestException(
+        'No se puede reservar un horario que ya pasó',
+      );
+    }
+
     const medico = await this.medicosService.buscarPorId(dto.medicoId);
 
     let paciente;
@@ -228,9 +245,7 @@ export class TurnosService {
         );
       }
     } else if (usuario.rol === Rol.ADMINISTRADOR) {
-      const inicio = new Date(
-        `${turno.fecha}T${turno.hora.slice(0, 5)}:00`,
-      );
+      const inicio = this.inicioTurno(turno.fecha, turno.hora);
 
       if (inicio <= new Date()) {
         throw new BadRequestException(
