@@ -21,7 +21,7 @@ export class Turno {
   hora: string;
 
   @Column({
-    type: 'enum',
+    type: 'simple-enum',
     enum: EstadoTurno,
     default: EstadoTurno.RESERVADO,
   })
