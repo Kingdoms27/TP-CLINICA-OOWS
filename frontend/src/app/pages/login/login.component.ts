@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -12,6 +12,10 @@ import { AuthService } from '../../core/auth.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  private readonly fb = inject(FormBuilder);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
   readonly cargando = signal(false);
   readonly error = signal('');
 
@@ -20,11 +24,7 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
-  constructor(
-    private readonly fb: FormBuilder,
-    private readonly auth: AuthService,
-    private readonly router: Router,
-  ) {
+  constructor() {
     if (this.auth.logueado()) {
       void this.router.navigateByUrl(this.auth.rutaPrincipal());
     }
