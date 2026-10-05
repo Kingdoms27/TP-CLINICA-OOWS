@@ -35,6 +35,7 @@ try {
 
   @"
 PORT=3000
+DB_TYPE=postgres
 DB_HOST=$dbHost
 DB_PORT=$dbPort
 DB_USERNAME=$dbUser
