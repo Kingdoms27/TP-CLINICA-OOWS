@@ -20,13 +20,13 @@ export class Usuario {
   password: string;
 
   @Column({
-    type: 'enum',
+    type: 'simple-enum',
     enum: Rol,
   })
   rol: Rol;
 
   @Column({
-    type: 'enum',
+    type: 'simple-enum',
     enum: EstadoUsuario,
     default: EstadoUsuario.ACTIVO,
   })
