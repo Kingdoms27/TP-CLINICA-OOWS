@@ -33,12 +33,26 @@ TP-CLINICA-OOWS
 
 ## Backend
 
-```bash
+### Windows con PostgreSQL local
+
+```powershell
 cd backend
 npm install
-cp .env.example .env
+powershell -ExecutionPolicy Bypass -File .\setup-local.ps1
 npm run start:dev
 ```
+
+El script solicita host, puerto, usuario, base y contraseña de PostgreSQL, y genera `backend/.env`.
+
+### Configuración manual
+
+También se puede copiar `.env.example` a `.env` y reemplazar:
+
+```text
+DB_PASSWORD=TU_PASSWORD_POSTGRES
+```
+
+por la contraseña real del usuario PostgreSQL configurado en la computadora.
 
 ## Frontend
 
@@ -51,6 +65,20 @@ npm start
 La aplicación se abre en `http://localhost:4200`.
 
 ## PostgreSQL
+
+El proyecto funciona con PostgreSQL local o Docker.
+
+### PostgreSQL local
+
+Crear una base llamada:
+
+```text
+clinica_oows
+```
+
+con el usuario PostgreSQL configurado en la computadora.
+
+### Docker
 
 ```bash
 docker compose up -d
