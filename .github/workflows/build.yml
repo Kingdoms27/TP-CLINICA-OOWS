@@ -84,3 +84,24 @@ jobs:
       - run: npm run start:prod > /tmp/clinica-api.log 2>&1 &
         working-directory: backend
       - run: node scripts/smoke-api.mjs
+
+  local:
+    runs-on: ubuntu-latest
+    env:
+      PORT: 3000
+      JWT_SECRET: clinica_oows_local_ci
+      JWT_EXPIRES_IN: 8h
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: backend/package.json
+      - run: npm install
+        working-directory: backend
+      - run: npm run build
+        working-directory: backend
+      - run: npm run start:prod > /tmp/clinica-api-local.log 2>&1 &
+        working-directory: backend
+      - run: node scripts/smoke-api.mjs
