@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -29,6 +29,11 @@ import {
   styleUrl: './admin.component.css',
 })
 export class AdminComponent implements OnInit {
+  private readonly fb = inject(FormBuilder);
+  private readonly api = inject(ClinicaApiService);
+  private readonly auth = inject(AuthService);
+  private readonly router = inject(Router);
+
   readonly usuario = this.auth.usuario;
   readonly medicos = signal<Medico[]>([]);
   readonly pacientes = signal<Paciente[]>([]);
@@ -49,13 +54,6 @@ export class AdminComponent implements OnInit {
     fecha: ['', Validators.required],
     hora: ['', Validators.required],
   });
-
-  constructor(
-    private readonly fb: FormBuilder,
-    private readonly api: ClinicaApiService,
-    private readonly auth: AuthService,
-    private readonly router: Router,
-  ) {}
 
   ngOnInit() {
     this.cargarTodo();
