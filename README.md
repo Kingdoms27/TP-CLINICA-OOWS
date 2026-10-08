@@ -298,6 +298,8 @@ Estos usuarios se generan automáticamente cuando la base se encuentra vacía.
 | `docs/TRABAJO-INTEGRADOR-OOWS.md` | Desarrollo conceptual del trabajo, reglas, navegación, presentación y API. |
 | `docs/DIAGRAMAS-OOWS.md` | Diagramas correspondientes al modelado OOWS. |
 | `docs/MAPEO-TRABAJO-PRACTICO.md` | Relación entre cada requisito de la consigna y su implementación. |
+| `docs/ENTREGA-FINAL-OOWS.md` | Resumen consolidado de la entrega académica. |
+| `docs/GUION-DEFENSA-OOWS.md` | Guion opcional para defensa oral o demo; no forma parte de los requisitos obligatorios. |
 
 ## Verificación del proyecto
 
